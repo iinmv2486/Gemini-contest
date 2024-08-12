@@ -92,20 +92,35 @@ function hideMiniPopup() {
   }
 }
 
-document.addEventListener("mouseup", function(event) {
-  if (!isTooltipEnabled) return;
-
+document.addEventListener('mouseup', function() {
   const selection = window.getSelection();
-  const selectedText = selection.toString().trim();
+  let selectedText = '';
+
+  if (selection.rangeCount > 0) {
+      for (let i = 0; i < selection.rangeCount; i++) {
+          const range = selection.getRangeAt(i);
+          const treeWalker = document.createTreeWalker(
+              range.cloneContents(),
+              NodeFilter.SHOW_TEXT
+          );
+
+          while (treeWalker.nextNode()) {
+              selectedText += treeWalker.currentNode.nodeValue + ' ';
+          }
+      }
+  }
+
+  selectedText = selectedText.trim();
+  console.log(selectedText);
 
   if (selectedText) {
-    const range = selection.getRangeAt(0);
-    const rect = range.getBoundingClientRect();
-    showMiniPopup(rect.right, rect.bottom + window.scrollY);
-  } else {
-    hideMiniPopup();
+      chrome.runtime.sendMessage({
+          type: 'TranslateSelectedText',
+          data: { originalText: [selectedText] }
+      });
   }
 });
+
 
 /////////////////////////////////////////
 //전체번역
