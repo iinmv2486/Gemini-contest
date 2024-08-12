@@ -93,6 +93,7 @@ function hideMiniPopup() {
 }
 
 document.addEventListener('mouseup', function() {
+  if (!isTooltipEnabled) return;
   const selection = window.getSelection();
   let selectedText = '';
 
@@ -114,10 +115,16 @@ document.addEventListener('mouseup', function() {
   console.log(selectedText);
 
   if (selectedText) {
+    const range = selection.getRangeAt(0);
+    const rect = range.getBoundingClientRect();
       chrome.runtime.sendMessage({
           type: 'TranslateSelectedText',
           data: { originalText: [selectedText] }
       });
+    showMiniPopup(rect.right, rect.bottom + window.scrollY);
+  }
+  else {
+    hideMiniPopup();
   }
 });
 

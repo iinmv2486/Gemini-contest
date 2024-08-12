@@ -5,6 +5,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (data.tooltipEnabled !== undefined) {
       document.getElementById('tooltipToggle').checked = data.tooltipEnabled;
     }
+    else {
+        // 최초 설치 시 기본값을 ON으로 설정
+        document.getElementById('tooltipToggle').checked = true;
+        chrome.storage.sync.set({ tooltipEnabled: true });
+    }
   });
   // 설정 변경 메시지 리스너 추가
   chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
