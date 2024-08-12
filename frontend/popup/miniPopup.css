@@ -1,0 +1,56 @@
+#transmate-mini-popup {
+    position: absolute;
+    background-color: white;
+    border: 2.5px solid #4CB765;
+    border-radius: 20px;
+    padding: 0px 3px;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.2);
+    width: 240px;
+    height: 35px;
+  }
+  
+  #translate-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    width: 80%;
+    color: #4CB765;
+    padding-left: 8px;
+    
+  }
+  #translate-button h6 {
+    padding-left: 5px;
+  }
+  #toggle-button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: flex-end;
+    width: 15%;
+  }
+  
+  #translate-button img, #toggle-button img {
+    width: 20px;
+    height: 20px;
+    margin-right: 5px;
+  }
+  
+  #toggle-button {
+    margin-left: 10px;
+  }
+  #vertical-line {
+    width: 1.4px;
+    height: 35px;
+    background-color: #4CB765;
+    margin: 0 5px;
+  }

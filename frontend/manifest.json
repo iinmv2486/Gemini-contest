@@ -1,16 +1,38 @@
 {
   "manifest_version": 3,
-  "name": "북악번역확장프로그램",
+  "name": "TransMate",
   "version": "1.0",
-  "description": "웹페이지의 영어 텍스트를 한국어로 자동으로 번역합니다.",
-  "permissions": ["activeTab", "storage"],
+  "description": "웹페이지의 외국어 텍스트를 모국어로 자동으로 번역합니다.",
+  "permissions": [
+    "storage",
+    "activeTab",
+    "scripting",
+    "contextMenus",
+    "sidePanel"
+  ],
   "background": {
     "service_worker": "background.js"
   },
   "content_scripts": [
     {
       "matches": ["<all_urls>"],
-      "js": ["content.js"]
+      "js": ["popup/selectPopup.js", "content.js"],
+      "css": ["popup/selectPopup.css","options/options.css","popup/miniPopup.css"],
+      "type": "module"
+    }
+  ],
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "icons/power.svg",
+        "icons/icon128.png",
+        "icons/icon48.png",
+        "icons/close.svg",
+        "icons/settings.svg",
+        "popup/selectPopup.css",
+        "options/options.css"
+      ],
+      "matches": ["<all_urls>"]
     }
   ],
   "icons": {
@@ -25,5 +47,8 @@
       "48": "icons/icon48.png"
     }
   },
-  "options_page": "options/options.html"
+  "options_page": "options/options.html",
+  "side_panel": {
+    "default_path": "popup/popup.html"
+  }
 }

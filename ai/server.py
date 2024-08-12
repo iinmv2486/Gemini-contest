@@ -1,5 +1,7 @@
-from gevent import pywsgi
 from flask import Flask, request, jsonify
+import asyncio
+import hypercorn.asyncio
+from hypercorn.config import Config
 from async_call_LLM import translate_text
 
 app = Flask(__name__)
@@ -7,8 +9,11 @@ app = Flask(__name__)
 
 @app.route("/translate", methods=["POST"])
 async def translate():
-    return jsonify(await translate_text(request.get_json()))
-
+    data = request.get_json()
+    translation = await translate_text(data)
+    return jsonify(translation)
 
 if __name__ == "__main__":
-    pywsgi.WSGIServer(("localhost", 3001), app).serve_forever()
+    config = Config()
+    config.bind = ["0.0.0.0:3001"]
+    asyncio.run(hypercorn.asyncio.serve(app, config))
